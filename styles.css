@@ -1,82 +1,818 @@
-// ============================================
-// HireReady Ghana — Sales Letter JavaScript
-// ============================================
+/* ============================================
+   HireReady Ghana — Sales Letter Stylesheet
+   FIXED: Higher contrast, bulletproof fonts
+   ============================================ */
 
-(function() {
-    'use strict';
+:root {
+    --navy: #0A1628;
+    --navy-light: #0F1E35;
+    --navy-card: #132238;
+    --gold: #D4AF37;
+    --gold-light: #F0D878;
+    --gold-dark: #B8960C;
+    --white: #FFFFFF;
+    --off-white: #F8F9FB;
+    --gray: #A8B8D0;
+    --danger: #E74C3C;
+    --danger-light: #FADBD8;
+}
 
-    // Scroll reveal with IntersectionObserver
-    const reveals = document.querySelectorAll('.reveal');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Optionally unobserve after reveal
-                    // observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
-        });
+html {
+    scroll-behavior: smooth;
+}
 
-        reveals.forEach(el => observer.observe(el));
-    } else {
-        // Fallback for older browsers
-        reveals.forEach(el => el.classList.add('visible'));
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+/* ============================================
+   WHATSAPP STICKY BAR
+   ============================================ */
+
+.whatsapp-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #25D366 0%, #128C7E 100%);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-sticky:hover {
+    transform: translateY(-2px);
+}
+
+.whatsapp-sticky svg {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.whatsapp-sticky span {
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+.whatsapp-sticky .wa-number {
+    font-size: 18px;
+    font-weight: 900;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 24px 120px;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+        var(--navy);
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark));
+    background-size: 200% 100%;
+    animation: shimmer 3s ease infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 32px;
+    animation: fadeInDown 0.8s ease;
+}
+
+.hero-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--danger);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 900px;
+    margin-bottom: 24px;
+    animation: fadeInUp 1s ease 0.2s both;
+    color: var(--white);
+}
+
+.hero h1 .gold-text {
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+}
+
+.hero h1 .danger-text {
+    color: var(--danger);
+    text-decoration: underline;
+    text-decoration-color: var(--danger);
+    text-underline-offset: 4px;
+}
+
+.hero-subhead {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--gray);
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero-subhead strong {
+    color: var(--white);
+    font-weight: 700;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 18px;
+    padding: 18px 48px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.35), 0 0 0 4px rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease 0.6s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-cta::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+
+.hero-cta:hover::after {
+    left: 100%;
+}
+
+.hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(212, 175, 55, 0.45), 0 0 0 6px rgba(212, 175, 55, 0.15);
+}
+
+.hero-trust {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    animation: fadeInUp 1s ease 0.8s both;
+}
+
+.hero-trust .avatars {
+    display: flex;
+}
+
+.hero-trust .avatars span {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.hero-trust .avatars span:first-child {
+    margin-left: 0;
+}
+
+.hero-trust .avatars span:nth-child(1) { background: #2C5F8A; }
+.hero-trust .avatars span:nth-child(2) { background: #8B5A2B; }
+.hero-trust .avatars span:nth-child(3) { background: #4A6741; }
+.hero-trust .avatars span:nth-child(4) { background: #6B4C7A; }
+.hero-trust .avatars span:nth-child(5) { background: #8B4513; }
+
+.hero-trust p {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.hero-trust p strong {
+    color: var(--gold-light);
+    font-weight: 700;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+.section {
+    padding: 100px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.section-label {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--gold);
+    padding-left: 12px;
+}
+
+.section h2 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: var(--white);
+}
+
+.section h2 .gold-text {
+    color: var(--gold);
+}
+
+.section > p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #C5D3E8;
+    margin-bottom: 20px;
+}
+
+.section > p strong {
+    color: var(--white);
+    font-weight: 700;
+}
+
+/* ============================================
+   STORY CARD
+   ============================================ */
+
+.story-card {
+    background: var(--navy-card);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 16px;
+    padding: 48px 36px;
+    margin: 60px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.story-card::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 180px;
+    color: rgba(212, 175, 55, 0.06);
+    line-height: 1;
+}
+
+.story-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    font-weight: 700;
+}
+
+.story-card .story-text {
+    font-style: italic;
+    color: #D0DCE8;
+    line-height: 2;
+    font-size: 1.05rem;
+    position: relative;
+    z-index: 1;
+}
+
+.story-card .story-text .highlight {
+    color: var(--gold);
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* ============================================
+   FEAR BLOCK
+   ============================================ */
+
+.fear-block {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(231, 76, 60, 0.02));
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: 16px;
+    padding: 40px 32px;
+    margin: 50px 0;
+    position: relative;
+}
+
+.fear-block .fear-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(231, 76, 60, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.fear-block h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--danger);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.fear-block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.fear-block ul li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(231, 76, 60, 0.1);
+    color: #E8C5C0;
+    font-size: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.6;
+}
+
+.fear-block ul li:last-child {
+    border-bottom: none;
+}
+
+.fear-block ul li::before {
+    content: '\2717';
+    color: var(--danger);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.fear-block ul li strong {
+    color: #F0D0D0;
+    font-weight: 600;
+}
+
+/* ============================================
+   STATS BAR
+   ============================================ */
+
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 60px 0;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 28px 16px;
+    background: var(--navy-card);
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.stat-item .stat-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--gold);
+    display: block;
+}
+
+.stat-item .stat-label {
+    font-size: 12px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* ============================================
+   STEPS
+   ============================================ */
+
+.steps {
+    margin: 60px 0;
+}
+
+.step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+}
+
+.step-number {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+}
+
+.step-content h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+}
+
+.step-content p {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* ============================================
+   TESTIMONIAL
+   ============================================ */
+
+.testimonial {
+    background: var(--navy-card);
+    border-radius: 16px;
+    padding: 40px 36px;
+    margin: 60px 0;
+    border-left: 4px solid var(--gold);
+    position: relative;
+}
+
+.testimonial::before {
+    content: '"';
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 80px;
+    color: rgba(212, 175, 55, 0.15);
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    line-height: 1;
+}
+
+.testimonial-text {
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #D0DCE8;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.testimonial-author .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 18px;
+}
+
+.testimonial-author .name {
+    font-weight: 700;
+    color: var(--white);
+}
+
+.testimonial-author .role {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.testimonial-author .stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* ============================================
+   GUARANTEE
+   ============================================ */
+
+.guarantee {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+    margin: 60px 0;
+}
+
+.guarantee h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.guarantee p {
+    color: #D0DCE8;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.guarantee p strong {
+    color: var(--white);
+    font-weight: 700;
+}
+
+/* ============================================
+   FINAL CTA
+   ============================================ */
+
+.final-cta {
+    text-align: center;
+    padding: 80px 24px 140px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.1) 0%, transparent 60%),
+        var(--navy);
+}
+
+.final-cta h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4.5vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1.15;
+    color: var(--white);
+}
+
+.final-cta h2 .gold-text {
+    color: var(--gold);
+}
+
+.final-cta > p {
+    color: #A8B8D0;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+}
+
+.final-cta > p em {
+    color: var(--white);
+    font-style: italic;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy);
+    font-weight: 900;
+    font-size: 20px;
+    padding: 22px 56px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4), 0 0 0 5px rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.cta-button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 50px rgba(212, 175, 55, 0.5), 0 0 0 7px rgba(212, 175, 55, 0.15);
+}
+
+.cta-note {
+    font-size: 13px;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cta-note .check {
+    color: var(--gold);
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+
+.gold-divider {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+    margin: 0 auto 40px;
+    border-radius: 3px;
+}
+
+/* ============================================
+   SCROLL REVEAL — FIXED: No hidden content
+   ============================================ */
+
+.reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* If JS is disabled, content is still visible */
+.no-js .reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+    .stats-bar {
+        grid-template-columns: 1fr;
     }
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Track WhatsApp clicks for analytics (placeholder)
-    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-        link.addEventListener('click', function() {
-            // Add your analytics event here
-            // gtag('event', 'whatsapp_click', { ... });
-            console.log('WhatsApp CTA clicked');
-        });
-    });
-
-    // Add subtle parallax effect to hero on scroll
-    const hero = document.querySelector('.hero');
-    if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * 0.15;
-            if (scrolled < window.innerHeight) {
-                hero.style.backgroundPosition = `center ${rate}px`;
-            }
-        }, { passive: true });
+    .step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
-    // Lazy load images if any are added later
-    if ('IntersectionObserver' in window) {
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-        lazyImages.forEach(img => imageObserver.observe(img));
+    .whatsapp-sticky {
+        padding: 12px 16px;
     }
 
-})();
+    .whatsapp-sticky span {
+        font-size: 14px;
+    }
+
+    .whatsapp-sticky .wa-number {
+        font-size: 15px;
+        padding: 3px 10px;
+    }
+
+    .hero-cta {
+        padding: 16px 32px;
+        font-size: 16px;
+    }
+
+    .cta-button {
+        padding: 18px 40px;
+        font-size: 18px;
+    }
+
+    .story-card,
+    .fear-block,
+    .testimonial,
+    .guarantee {
+        padding: 32px 24px;
+    }
+
+    .section {
+        padding: 60px 20px;
+    }
+
+    .final-cta {
+        padding: 60px 20px 120px;
+    }
+}
+
+@media (max-width: 400px) {
+    .whatsapp-sticky {
+        flex-direction: column;
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .whatsapp-sticky span:first-of-type {
+        display: none;
+    }
+}
